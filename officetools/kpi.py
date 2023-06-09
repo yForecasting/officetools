@@ -69,8 +69,24 @@ def process_csv(csv_file):
     Returns:
         None
     """
-    with open(csv_file, 'r') as file:
-        csv_reader = csv.reader(file)
+    # D3
+    # process_csv('parameters.csv')
+    # The CSV file should have the following format:
+    # column headers
+    # source_file1, source_sheet1, source_cell1, destination_file1, destination_sheet1, destination_cell1
+    # source_file2, source_sheet2, source_cell2, destination_file2, destination_sheet2, destination_cell2
+
+    with open(csv_file, 'r', newline='') as file:
+        # Read the first line of the CSV file
+        first_line = file.readline().strip()
+
+        # Determine the delimiter based on the first line
+        delimiter = ',' if ',' in first_line else ';'
+
+        # Reset the file pointer to the beginning
+        file.seek(0)
+
+        csv_reader = csv.reader(file, delimiter=delimiter)
         next(csv_reader)  # Skip the header row if present
 
         for line in csv_reader:
@@ -80,5 +96,3 @@ def process_csv(csv_file):
             # Call the copy_excel_cell function with the extracted parameters
             copy_excel_cell(source_file, source_sheet, source_cell, destination_file, destination_sheet,
                             destination_cell)
-
-
