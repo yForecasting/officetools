@@ -59,5 +59,26 @@ def copy_excel_cell(source_file, source_sheet, source_cell, destination_file, de
     source_workbook.close()
     destination_workbook.close()
 
+def process_csv(csv_file):
+    """
+    Read the parameters for the copy_excel_cell function from a CSV file and execute it for each line.
+
+    Parameters:
+        csv_file (str): The path to the CSV file containing the function parameters.
+
+    Returns:
+        None
+    """
+    with open(csv_file, 'r') as file:
+        csv_reader = csv.reader(file)
+        next(csv_reader)  # Skip the header row if present
+
+        for line in csv_reader:
+            # Extract the parameters from the CSV line
+            source_file, source_sheet, source_cell, destination_file, destination_sheet, destination_cell = line
+
+            # Call the copy_excel_cell function with the extracted parameters
+            copy_excel_cell(source_file, source_sheet, source_cell, destination_file, destination_sheet,
+                            destination_cell)
 
 
