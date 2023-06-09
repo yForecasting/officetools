@@ -7,13 +7,23 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
+import re
+VERSIONFILE="officetools/_version.py"
+verstrline = open(VERSIONFILE, "rt").read()
+VSRE = r"^__version__ = ['\"]([^'\"]*)['\"]"
+mo = re.search(VSRE, verstrline, re.M)
+if mo:
+    verstr = mo.group(1)
+else:
+    raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
+
 setuptools.setup(
     author="Yves R. Sagaert",
     author_email="yves.r.sagaert@gmail.com",
     name='officetools',
     license="GNU GPLv3",
     description='Forecasting package for office automation',
-    version='v0.0.1',
+    version=verstr,
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/yForecasting/officetools',
